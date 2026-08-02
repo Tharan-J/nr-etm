@@ -114,7 +114,7 @@ void main() {
     () async {
       final selfTest = await healthEngine.runSelfTest();
       expect(selfTest.isAllPassed, isTrue);
-      expect(selfTest.items.length, equals(8));
+      expect(selfTest.items.length, equals(9));
     },
   );
 }
