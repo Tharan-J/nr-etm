@@ -15,9 +15,7 @@ class EtmPlaceholderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -53,7 +51,11 @@ class EtmPlaceholderScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.construction, size: 48, color: Color(0xFF94A3B8)),
+                    const Icon(
+                      Icons.construction,
+                      size: 48,
+                      color: Color(0xFF94A3B8),
+                    ),
                     const SizedBox(height: 16),
                     Text(
                       title,
