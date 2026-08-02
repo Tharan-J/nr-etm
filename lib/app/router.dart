@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../ui/screens/pairing_screen.dart';
 import '../ui/screens/placeholder_screen.dart';
+import '../ui/screens/splash_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/splash',
@@ -8,10 +11,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/splash',
       builder: (BuildContext context, GoRouterState state) {
-        return const EtmPlaceholderScreen(
-          title: 'Splash Screen',
-          specReference: 'Spec 09 §8.1',
-        );
+        return const SplashScreen();
+      },
+    ),
+    GoRoute(
+      path: '/pairing',
+      builder: (BuildContext context, GoRouterState state) {
+        return const PairingScreen();
       },
     ),
     GoRoute(
@@ -34,6 +40,15 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const EtmPlaceholderScreen(
+          title: 'Home Dashboard',
+          specReference: 'Spec 09 §8.4',
+        );
+      },
+    ),
+    GoRoute(
+      path: '/dashboard',
       builder: (BuildContext context, GoRouterState state) {
         return const EtmPlaceholderScreen(
           title: 'Home Dashboard',

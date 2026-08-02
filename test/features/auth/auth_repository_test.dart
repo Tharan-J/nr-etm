@@ -34,41 +34,53 @@ void main() {
     await database.close();
   });
 
-  test('getActiveSession returns unpaired status when no stored token exists', () async {
-    when(() => mockStorage.getDeviceToken()).thenAnswer((_) async => null);
-    when(() => mockStorage.getDeviceId()).thenAnswer((_) async => 'dev_101');
+  test(
+    'getActiveSession returns unpaired status when no stored token exists',
+    () async {
+      when(() => mockStorage.getDeviceToken()).thenAnswer((_) async => null);
+      when(() => mockStorage.getDeviceId()).thenAnswer((_) async => 'dev_101');
 
-    final session = await repository.getActiveSession();
+      final session = await repository.getActiveSession();
 
-    expect(session.status, equals(AuthStatus.unpaired));
-    expect(session.deviceId, equals('dev_101'));
-  });
+      expect(session.status, equals(AuthStatus.unpaired));
+      expect(session.deviceId, equals('dev_101'));
+    },
+  );
 
-  test('pairOperator calls remote API, saves credentials, and updates session state', () async {
-    const request = PairingRequest(
-      deviceId: 'dev_101',
-      conductorPin: '1234',
-      busId: 'BUS_77',
-    );
+  test(
+    'pairOperator calls remote API, saves credentials, and updates session state',
+    () async {
+      const request = PairingRequest(
+        deviceId: 'dev_101',
+        conductorPin: '1234',
+        busId: 'BUS_77',
+      );
 
-    const response = PairingResponse(
-      token: 'jwt_token_99',
-      conductorId: 'cond_55',
-      sessionId: 'sess_abc',
-    );
+      const response = PairingResponse(
+        token: 'jwt_token_99',
+        conductorId: 'cond_55',
+        sessionId: 'sess_abc',
+      );
 
-    when(() => mockRemote.pairDevice(request)).thenAnswer((_) async => response);
-    when(() => mockStorage.saveDeviceToken('jwt_token_99')).thenAnswer((_) async {});
-    when(() => mockStorage.saveDeviceId('dev_101')).thenAnswer((_) async {});
+      when(
+        () => mockRemote.pairDevice(request),
+      ).thenAnswer((_) async => response);
+      when(
+        () => mockStorage.saveDeviceToken('jwt_token_99'),
+      ).thenAnswer((_) async {});
+      when(() => mockStorage.saveDeviceId('dev_101')).thenAnswer((_) async {});
 
-    final session = await repository.pairOperator(request);
+      final session = await repository.pairOperator(request);
 
-    expect(session.status, equals(AuthStatus.authenticated));
-    expect(session.sessionId, equals('sess_abc'));
-    expect(session.conductorId, equals('cond_55'));
+      expect(session.status, equals(AuthStatus.authenticated));
+      expect(session.sessionId, equals('sess_abc'));
+      expect(session.conductorId, equals('cond_55'));
 
-    final storedSessions = await database.select(database.sessionStateTable).get();
-    expect(storedSessions.length, equals(1));
-    expect(storedSessions.first.sessionId, equals('sess_abc'));
-  });
+      final storedSessions = await database
+          .select(database.sessionStateTable)
+          .get();
+      expect(storedSessions.length, equals(1));
+      expect(storedSessions.first.sessionId, equals('sess_abc'));
+    },
+  );
 }

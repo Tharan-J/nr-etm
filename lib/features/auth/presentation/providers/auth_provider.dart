@@ -74,5 +74,5 @@ class AuthNotifier extends StateNotifier<AsyncValue<ConductorSession>> {
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<ConductorSession>>((ref) {
-  return AuthNotifier(ref.watch(authRepositoryProvider));
-});
+      return AuthNotifier(ref.watch(authRepositoryProvider));
+    });

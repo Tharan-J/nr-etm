@@ -13,22 +13,20 @@ abstract class AuthRepository {
 }
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource _remoteDataSource;
-  final SecureStorageService _secureStorage;
-  final AppDatabase _database;
+  final AuthRemoteDataSource remoteDataSource;
+  final SecureStorageService secureStorage;
+  final AppDatabase database;
 
   AuthRepositoryImpl({
-    required AuthRemoteDataSource remoteDataSource,
-    required SecureStorageService secureStorage,
-    required AppDatabase database,
-  })  : _remoteDataSource = remoteDataSource,
-        _secureStorage = secureStorage,
-        _database = database;
+    required this.remoteDataSource,
+    required this.secureStorage,
+    required this.database,
+  });
 
   @override
   Future<ConductorSession> getActiveSession() async {
-    final token = await _secureStorage.getDeviceToken();
-    final deviceId = await _secureStorage.getDeviceId() ?? 'dev_unknown';
+    final token = await secureStorage.getDeviceToken();
+    final deviceId = await secureStorage.getDeviceId() ?? 'dev_unknown';
 
     if (token == null || token.isEmpty) {
       return ConductorSession(
@@ -39,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     }
 
-    final sessionRecords = await (_database.select(_database.sessionStateTable)
+    final sessionRecords = await (database.select(database.sessionStateTable)
           ..where((t) => t.deviceId.equals(deviceId)))
         .get();
 
@@ -66,19 +64,19 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<ConductorSession> pairOperator(PairingRequest request) async {
-    final pairingResponse = await _remoteDataSource.pairDevice(request);
+    final pairingResponse = await remoteDataSource.pairDevice(request);
 
     // Save tokens securely
-    await _secureStorage.saveDeviceToken(pairingResponse.token);
-    await _secureStorage.saveDeviceId(request.deviceId);
+    await secureStorage.saveDeviceToken(pairingResponse.token);
+    await secureStorage.saveDeviceId(request.deviceId);
     if (pairingResponse.refreshToken != null) {
-      await _secureStorage.saveRefreshToken(pairingResponse.refreshToken!);
+      await secureStorage.saveRefreshToken(pairingResponse.refreshToken!);
     }
 
     final now = DateTime.now();
 
     // Persist session state in Drift database
-    await _database.into(_database.sessionStateTable).insertOnConflictUpdate(
+    await database.into(database.sessionStateTable).insertOnConflictUpdate(
           SessionStateTableCompanion.insert(
             sessionId: pairingResponse.sessionId,
             deviceId: request.deviceId,
@@ -103,7 +101,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _secureStorage.clearAllCredentials();
-    await _database.delete(_database.sessionStateTable).go();
+    await secureStorage.clearAllCredentials();
+    await database.delete(database.sessionStateTable).go();
   }
 }
