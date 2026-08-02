@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import 'dao/durable_capture_dao.dart';
 import 'tables/metadata_table.dart';
 import 'tables/outbound_queue_table.dart';
 import 'tables/session_state_table.dart';
@@ -21,6 +22,7 @@ part 'app_database.g.dart';
     OutboundQueueTable,
     SessionStateTable,
   ],
+  daos: [DurableCaptureDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());

@@ -2809,6 +2809,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $OutboundQueueTableTable(this);
   late final $SessionStateTableTable sessionStateTable =
       $SessionStateTableTable(this);
+  late final DurableCaptureDao durableCaptureDao = DurableCaptureDao(
+    this as AppDatabase,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
