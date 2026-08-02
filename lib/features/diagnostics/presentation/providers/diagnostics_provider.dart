@@ -38,6 +38,8 @@ final healthEngineProvider = Provider<HealthEngine>((ref) {
   );
 });
 
-final systemHealthReportProvider = FutureProvider<SystemHealthReport>((ref) async {
+final systemHealthReportProvider = FutureProvider<SystemHealthReport>((
+  ref,
+) async {
   return ref.watch(healthEngineProvider).evaluateSystemHealth();
 });
