@@ -37,9 +37,9 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     }
 
-    final sessionRecords = await (database.select(database.sessionStateTable)
-          ..where((t) => t.deviceId.equals(deviceId)))
-        .get();
+    final sessionRecords = await (database.select(
+      database.sessionStateTable,
+    )..where((t) => t.deviceId.equals(deviceId))).get();
 
     if (sessionRecords.isNotEmpty) {
       final record = sessionRecords.first;
@@ -49,7 +49,9 @@ class AuthRepositoryImpl implements AuthRepository {
         conductorId: record.conductorId,
         busId: record.busId,
         tripId: record.tripId,
-        status: record.authState == 'authorized' ? AuthStatus.authenticated : AuthStatus.unpaired,
+        status: record.authState == 'authorized'
+            ? AuthStatus.authenticated
+            : AuthStatus.unpaired,
         lastSyncAt: record.lastSyncAt ?? record.updatedAt,
       );
     }
@@ -76,7 +78,9 @@ class AuthRepositoryImpl implements AuthRepository {
     final now = DateTime.now();
 
     // Persist session state in Drift database
-    await database.into(database.sessionStateTable).insertOnConflictUpdate(
+    await database
+        .into(database.sessionStateTable)
+        .insertOnConflictUpdate(
           SessionStateTableCompanion.insert(
             sessionId: pairingResponse.sessionId,
             deviceId: request.deviceId,

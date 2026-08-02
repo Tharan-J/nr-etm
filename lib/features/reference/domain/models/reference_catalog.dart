@@ -23,11 +23,13 @@ class ReferenceCatalog {
   bool get isExpired => DateTime.now().isAfter(expiresAt);
 
   factory ReferenceCatalog.fromJson(Map<String, dynamic> json) {
-    final routesList = (json['routes'] as List<dynamic>?)
+    final routesList =
+        (json['routes'] as List<dynamic>?)
             ?.map((e) => BusRoute.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];
-    final ticketTypesList = (json['ticket_types'] as List<dynamic>?)
+    final ticketTypesList =
+        (json['ticket_types'] as List<dynamic>?)
             ?.map((e) => TicketType.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];
@@ -37,8 +39,11 @@ class ReferenceCatalog {
       version: json['version'] as String? ?? 'v1.0.0',
       routes: routesList,
       ticketTypes: ticketTypesList,
-      fetchedAt: DateTime.tryParse(json['fetched_at'] as String? ?? '') ?? DateTime.now(),
-      expiresAt: DateTime.tryParse(json['expires_at'] as String? ?? '') ??
+      fetchedAt:
+          DateTime.tryParse(json['fetched_at'] as String? ?? '') ??
+          DateTime.now(),
+      expiresAt:
+          DateTime.tryParse(json['expires_at'] as String? ?? '') ??
           DateTime.now().add(const Duration(hours: 24)),
       isStale: json['is_stale'] as bool? ?? false,
     );

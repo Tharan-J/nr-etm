@@ -18,7 +18,8 @@ class BusRoute {
   });
 
   factory BusRoute.fromJson(Map<String, dynamic> json) {
-    final stopsList = (json['stops'] as List<dynamic>?)
+    final stopsList =
+        (json['stops'] as List<dynamic>?)
             ?.map((e) => BusStop.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];
