@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package etm.contracts;
+
+option java_package = "com.nammaroute.nr_etm.proto";
+option java_multiple_files = true;
+
+message TelemetryPingRecord {
+  string ping_id = 1;
+  string device_id = 2;
+  double latitude = 3;
+  double longitude = 4;
+  float speed_mps = 5;
+  float heading_degrees = 6;
+  int64 captured_at_epoch_ms = 7;
+  string trip_id = 8;
+  int32 battery_level_pct = 9;
+  bool is_charging = 10;
+}

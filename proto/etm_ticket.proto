@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package etm.contracts;
+
+option java_package = "com.nammaroute.nr_etm.proto";
+option java_multiple_files = true;
+
+message TicketRecord {
+  string ticket_id = 1;
+  string device_id = 2;
+  string conductor_id = 3;
+  string trip_id = 4;
+  string fare_rule_id = 5;
+  string boarding_stop_id = 6;
+  string destination_stop_id = 7;
+  int64 fare_amount_paise = 8;
+  int64 captured_at_epoch_ms = 9;
+  string currency = 10;
+  string commuter_id = 11;
+  int32 ticket_sequence_number = 12;
+}
