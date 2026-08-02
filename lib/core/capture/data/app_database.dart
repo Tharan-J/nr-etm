@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dao/durable_capture_dao.dart';
 import 'tables/metadata_table.dart';
 import 'tables/outbound_queue_table.dart';
+import 'tables/reference_catalog_table.dart';
 import 'tables/session_state_table.dart';
 import 'tables/telemetry_table.dart';
 import 'tables/ticket_table.dart';
@@ -21,6 +22,7 @@ part 'app_database.g.dart';
     TelemetryTable,
     OutboundQueueTable,
     SessionStateTable,
+    ReferenceCatalogTable,
   ],
   daos: [DurableCaptureDao],
 )
@@ -30,7 +32,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(DatabaseConnection super.connection);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -39,7 +41,9 @@ class AppDatabase extends _$AppDatabase {
         await m.createAll();
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        // Explicit version migration handlers will be added per schema iteration
+        if (from < 2) {
+          await m.createTable(referenceCatalogTable);
+        }
       },
       beforeOpen: (details) async {
         // Enforce SQLite Foreign Key constraints for relational integrity

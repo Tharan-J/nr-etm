@@ -2799,6 +2799,443 @@ class SessionStateTableCompanion
   }
 }
 
+class $ReferenceCatalogTableTable extends ReferenceCatalogTable
+    with TableInfo<$ReferenceCatalogTableTable, ReferenceCatalogData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReferenceCatalogTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _catalogIdMeta = const VerificationMeta(
+    'catalogId',
+  );
+  @override
+  late final GeneratedColumn<String> catalogId = GeneratedColumn<String>(
+    'catalog_id',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _versionMeta = const VerificationMeta(
+    'version',
+  );
+  @override
+  late final GeneratedColumn<String> version = GeneratedColumn<String>(
+    'version',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 50,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadJsonMeta = const VerificationMeta(
+    'payloadJson',
+  );
+  @override
+  late final GeneratedColumn<String> payloadJson = GeneratedColumn<String>(
+    'payload_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fetchedAtMeta = const VerificationMeta(
+    'fetchedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> fetchedAt = GeneratedColumn<DateTime>(
+    'fetched_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _expiresAtMeta = const VerificationMeta(
+    'expiresAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> expiresAt = GeneratedColumn<DateTime>(
+    'expires_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isStaleMeta = const VerificationMeta(
+    'isStale',
+  );
+  @override
+  late final GeneratedColumn<bool> isStale = GeneratedColumn<bool>(
+    'is_stale',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_stale" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    catalogId,
+    version,
+    payloadJson,
+    fetchedAt,
+    expiresAt,
+    isStale,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reference_catalog_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReferenceCatalogData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('catalog_id')) {
+      context.handle(
+        _catalogIdMeta,
+        catalogId.isAcceptableOrUnknown(data['catalog_id']!, _catalogIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_catalogIdMeta);
+    }
+    if (data.containsKey('version')) {
+      context.handle(
+        _versionMeta,
+        version.isAcceptableOrUnknown(data['version']!, _versionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_versionMeta);
+    }
+    if (data.containsKey('payload_json')) {
+      context.handle(
+        _payloadJsonMeta,
+        payloadJson.isAcceptableOrUnknown(
+          data['payload_json']!,
+          _payloadJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadJsonMeta);
+    }
+    if (data.containsKey('fetched_at')) {
+      context.handle(
+        _fetchedAtMeta,
+        fetchedAt.isAcceptableOrUnknown(data['fetched_at']!, _fetchedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fetchedAtMeta);
+    }
+    if (data.containsKey('expires_at')) {
+      context.handle(
+        _expiresAtMeta,
+        expiresAt.isAcceptableOrUnknown(data['expires_at']!, _expiresAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_expiresAtMeta);
+    }
+    if (data.containsKey('is_stale')) {
+      context.handle(
+        _isStaleMeta,
+        isStale.isAcceptableOrUnknown(data['is_stale']!, _isStaleMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {catalogId};
+  @override
+  ReferenceCatalogData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReferenceCatalogData(
+      catalogId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}catalog_id'],
+      )!,
+      version: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}version'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+      fetchedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}fetched_at'],
+      )!,
+      expiresAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}expires_at'],
+      )!,
+      isStale: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_stale'],
+      )!,
+    );
+  }
+
+  @override
+  $ReferenceCatalogTableTable createAlias(String alias) {
+    return $ReferenceCatalogTableTable(attachedDatabase, alias);
+  }
+}
+
+class ReferenceCatalogData extends DataClass
+    implements Insertable<ReferenceCatalogData> {
+  final String catalogId;
+  final String version;
+  final String payloadJson;
+  final DateTime fetchedAt;
+  final DateTime expiresAt;
+  final bool isStale;
+  const ReferenceCatalogData({
+    required this.catalogId,
+    required this.version,
+    required this.payloadJson,
+    required this.fetchedAt,
+    required this.expiresAt,
+    required this.isStale,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['catalog_id'] = Variable<String>(catalogId);
+    map['version'] = Variable<String>(version);
+    map['payload_json'] = Variable<String>(payloadJson);
+    map['fetched_at'] = Variable<DateTime>(fetchedAt);
+    map['expires_at'] = Variable<DateTime>(expiresAt);
+    map['is_stale'] = Variable<bool>(isStale);
+    return map;
+  }
+
+  ReferenceCatalogTableCompanion toCompanion(bool nullToAbsent) {
+    return ReferenceCatalogTableCompanion(
+      catalogId: Value(catalogId),
+      version: Value(version),
+      payloadJson: Value(payloadJson),
+      fetchedAt: Value(fetchedAt),
+      expiresAt: Value(expiresAt),
+      isStale: Value(isStale),
+    );
+  }
+
+  factory ReferenceCatalogData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReferenceCatalogData(
+      catalogId: serializer.fromJson<String>(json['catalogId']),
+      version: serializer.fromJson<String>(json['version']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+      fetchedAt: serializer.fromJson<DateTime>(json['fetchedAt']),
+      expiresAt: serializer.fromJson<DateTime>(json['expiresAt']),
+      isStale: serializer.fromJson<bool>(json['isStale']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'catalogId': serializer.toJson<String>(catalogId),
+      'version': serializer.toJson<String>(version),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+      'fetchedAt': serializer.toJson<DateTime>(fetchedAt),
+      'expiresAt': serializer.toJson<DateTime>(expiresAt),
+      'isStale': serializer.toJson<bool>(isStale),
+    };
+  }
+
+  ReferenceCatalogData copyWith({
+    String? catalogId,
+    String? version,
+    String? payloadJson,
+    DateTime? fetchedAt,
+    DateTime? expiresAt,
+    bool? isStale,
+  }) => ReferenceCatalogData(
+    catalogId: catalogId ?? this.catalogId,
+    version: version ?? this.version,
+    payloadJson: payloadJson ?? this.payloadJson,
+    fetchedAt: fetchedAt ?? this.fetchedAt,
+    expiresAt: expiresAt ?? this.expiresAt,
+    isStale: isStale ?? this.isStale,
+  );
+  ReferenceCatalogData copyWithCompanion(ReferenceCatalogTableCompanion data) {
+    return ReferenceCatalogData(
+      catalogId: data.catalogId.present ? data.catalogId.value : this.catalogId,
+      version: data.version.present ? data.version.value : this.version,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+      fetchedAt: data.fetchedAt.present ? data.fetchedAt.value : this.fetchedAt,
+      expiresAt: data.expiresAt.present ? data.expiresAt.value : this.expiresAt,
+      isStale: data.isStale.present ? data.isStale.value : this.isStale,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReferenceCatalogData(')
+          ..write('catalogId: $catalogId, ')
+          ..write('version: $version, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('fetchedAt: $fetchedAt, ')
+          ..write('expiresAt: $expiresAt, ')
+          ..write('isStale: $isStale')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    catalogId,
+    version,
+    payloadJson,
+    fetchedAt,
+    expiresAt,
+    isStale,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReferenceCatalogData &&
+          other.catalogId == this.catalogId &&
+          other.version == this.version &&
+          other.payloadJson == this.payloadJson &&
+          other.fetchedAt == this.fetchedAt &&
+          other.expiresAt == this.expiresAt &&
+          other.isStale == this.isStale);
+}
+
+class ReferenceCatalogTableCompanion
+    extends UpdateCompanion<ReferenceCatalogData> {
+  final Value<String> catalogId;
+  final Value<String> version;
+  final Value<String> payloadJson;
+  final Value<DateTime> fetchedAt;
+  final Value<DateTime> expiresAt;
+  final Value<bool> isStale;
+  final Value<int> rowid;
+  const ReferenceCatalogTableCompanion({
+    this.catalogId = const Value.absent(),
+    this.version = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    this.fetchedAt = const Value.absent(),
+    this.expiresAt = const Value.absent(),
+    this.isStale = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReferenceCatalogTableCompanion.insert({
+    required String catalogId,
+    required String version,
+    required String payloadJson,
+    required DateTime fetchedAt,
+    required DateTime expiresAt,
+    this.isStale = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : catalogId = Value(catalogId),
+       version = Value(version),
+       payloadJson = Value(payloadJson),
+       fetchedAt = Value(fetchedAt),
+       expiresAt = Value(expiresAt);
+  static Insertable<ReferenceCatalogData> custom({
+    Expression<String>? catalogId,
+    Expression<String>? version,
+    Expression<String>? payloadJson,
+    Expression<DateTime>? fetchedAt,
+    Expression<DateTime>? expiresAt,
+    Expression<bool>? isStale,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (catalogId != null) 'catalog_id': catalogId,
+      if (version != null) 'version': version,
+      if (payloadJson != null) 'payload_json': payloadJson,
+      if (fetchedAt != null) 'fetched_at': fetchedAt,
+      if (expiresAt != null) 'expires_at': expiresAt,
+      if (isStale != null) 'is_stale': isStale,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReferenceCatalogTableCompanion copyWith({
+    Value<String>? catalogId,
+    Value<String>? version,
+    Value<String>? payloadJson,
+    Value<DateTime>? fetchedAt,
+    Value<DateTime>? expiresAt,
+    Value<bool>? isStale,
+    Value<int>? rowid,
+  }) {
+    return ReferenceCatalogTableCompanion(
+      catalogId: catalogId ?? this.catalogId,
+      version: version ?? this.version,
+      payloadJson: payloadJson ?? this.payloadJson,
+      fetchedAt: fetchedAt ?? this.fetchedAt,
+      expiresAt: expiresAt ?? this.expiresAt,
+      isStale: isStale ?? this.isStale,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (catalogId.present) {
+      map['catalog_id'] = Variable<String>(catalogId.value);
+    }
+    if (version.present) {
+      map['version'] = Variable<String>(version.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    if (fetchedAt.present) {
+      map['fetched_at'] = Variable<DateTime>(fetchedAt.value);
+    }
+    if (expiresAt.present) {
+      map['expires_at'] = Variable<DateTime>(expiresAt.value);
+    }
+    if (isStale.present) {
+      map['is_stale'] = Variable<bool>(isStale.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReferenceCatalogTableCompanion(')
+          ..write('catalogId: $catalogId, ')
+          ..write('version: $version, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('fetchedAt: $fetchedAt, ')
+          ..write('expiresAt: $expiresAt, ')
+          ..write('isStale: $isStale, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2809,6 +3246,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $OutboundQueueTableTable(this);
   late final $SessionStateTableTable sessionStateTable =
       $SessionStateTableTable(this);
+  late final $ReferenceCatalogTableTable referenceCatalogTable =
+      $ReferenceCatalogTableTable(this);
   late final DurableCaptureDao durableCaptureDao = DurableCaptureDao(
     this as AppDatabase,
   );
@@ -2822,6 +3261,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     telemetryTable,
     outboundQueueTable,
     sessionStateTable,
+    referenceCatalogTable,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -4248,6 +4688,246 @@ typedef $$SessionStateTableTableProcessedTableManager =
       SessionStateTableData,
       PrefetchHooks Function()
     >;
+typedef $$ReferenceCatalogTableTableCreateCompanionBuilder =
+    ReferenceCatalogTableCompanion Function({
+      required String catalogId,
+      required String version,
+      required String payloadJson,
+      required DateTime fetchedAt,
+      required DateTime expiresAt,
+      Value<bool> isStale,
+      Value<int> rowid,
+    });
+typedef $$ReferenceCatalogTableTableUpdateCompanionBuilder =
+    ReferenceCatalogTableCompanion Function({
+      Value<String> catalogId,
+      Value<String> version,
+      Value<String> payloadJson,
+      Value<DateTime> fetchedAt,
+      Value<DateTime> expiresAt,
+      Value<bool> isStale,
+      Value<int> rowid,
+    });
+
+class $$ReferenceCatalogTableTableFilterComposer
+    extends Composer<_$AppDatabase, $ReferenceCatalogTableTable> {
+  $$ReferenceCatalogTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get catalogId => $composableBuilder(
+    column: $table.catalogId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get version => $composableBuilder(
+    column: $table.version,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get fetchedAt => $composableBuilder(
+    column: $table.fetchedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get expiresAt => $composableBuilder(
+    column: $table.expiresAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isStale => $composableBuilder(
+    column: $table.isStale,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ReferenceCatalogTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReferenceCatalogTableTable> {
+  $$ReferenceCatalogTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get catalogId => $composableBuilder(
+    column: $table.catalogId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get version => $composableBuilder(
+    column: $table.version,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get fetchedAt => $composableBuilder(
+    column: $table.fetchedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get expiresAt => $composableBuilder(
+    column: $table.expiresAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isStale => $composableBuilder(
+    column: $table.isStale,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReferenceCatalogTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReferenceCatalogTableTable> {
+  $$ReferenceCatalogTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get catalogId =>
+      $composableBuilder(column: $table.catalogId, builder: (column) => column);
+
+  GeneratedColumn<String> get version =>
+      $composableBuilder(column: $table.version, builder: (column) => column);
+
+  GeneratedColumn<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get fetchedAt =>
+      $composableBuilder(column: $table.fetchedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get expiresAt =>
+      $composableBuilder(column: $table.expiresAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isStale =>
+      $composableBuilder(column: $table.isStale, builder: (column) => column);
+}
+
+class $$ReferenceCatalogTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReferenceCatalogTableTable,
+          ReferenceCatalogData,
+          $$ReferenceCatalogTableTableFilterComposer,
+          $$ReferenceCatalogTableTableOrderingComposer,
+          $$ReferenceCatalogTableTableAnnotationComposer,
+          $$ReferenceCatalogTableTableCreateCompanionBuilder,
+          $$ReferenceCatalogTableTableUpdateCompanionBuilder,
+          (
+            ReferenceCatalogData,
+            BaseReferences<
+              _$AppDatabase,
+              $ReferenceCatalogTableTable,
+              ReferenceCatalogData
+            >,
+          ),
+          ReferenceCatalogData,
+          PrefetchHooks Function()
+        > {
+  $$ReferenceCatalogTableTableTableManager(
+    _$AppDatabase db,
+    $ReferenceCatalogTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReferenceCatalogTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ReferenceCatalogTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ReferenceCatalogTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> catalogId = const Value.absent(),
+                Value<String> version = const Value.absent(),
+                Value<String> payloadJson = const Value.absent(),
+                Value<DateTime> fetchedAt = const Value.absent(),
+                Value<DateTime> expiresAt = const Value.absent(),
+                Value<bool> isStale = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReferenceCatalogTableCompanion(
+                catalogId: catalogId,
+                version: version,
+                payloadJson: payloadJson,
+                fetchedAt: fetchedAt,
+                expiresAt: expiresAt,
+                isStale: isStale,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String catalogId,
+                required String version,
+                required String payloadJson,
+                required DateTime fetchedAt,
+                required DateTime expiresAt,
+                Value<bool> isStale = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReferenceCatalogTableCompanion.insert(
+                catalogId: catalogId,
+                version: version,
+                payloadJson: payloadJson,
+                fetchedAt: fetchedAt,
+                expiresAt: expiresAt,
+                isStale: isStale,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ReferenceCatalogTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReferenceCatalogTableTable,
+      ReferenceCatalogData,
+      $$ReferenceCatalogTableTableFilterComposer,
+      $$ReferenceCatalogTableTableOrderingComposer,
+      $$ReferenceCatalogTableTableAnnotationComposer,
+      $$ReferenceCatalogTableTableCreateCompanionBuilder,
+      $$ReferenceCatalogTableTableUpdateCompanionBuilder,
+      (
+        ReferenceCatalogData,
+        BaseReferences<
+          _$AppDatabase,
+          $ReferenceCatalogTableTable,
+          ReferenceCatalogData
+        >,
+      ),
+      ReferenceCatalogData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4262,4 +4942,6 @@ class $AppDatabaseManager {
       $$OutboundQueueTableTableTableManager(_db, _db.outboundQueueTable);
   $$SessionStateTableTableTableManager get sessionStateTable =>
       $$SessionStateTableTableTableManager(_db, _db.sessionStateTable);
+  $$ReferenceCatalogTableTableTableManager get referenceCatalogTable =>
+      $$ReferenceCatalogTableTableTableManager(_db, _db.referenceCatalogTable);
 }
