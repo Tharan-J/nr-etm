@@ -6,10 +6,22 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'tables/metadata_table.dart';
+import 'tables/outbound_queue_table.dart';
+import 'tables/session_state_table.dart';
+import 'tables/telemetry_table.dart';
+import 'tables/ticket_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [MetadataTable])
+@DriftDatabase(
+  tables: [
+    MetadataTable,
+    TicketTable,
+    TelemetryTable,
+    OutboundQueueTable,
+    SessionStateTable,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
 
@@ -25,7 +37,7 @@ class AppDatabase extends _$AppDatabase {
         await m.createAll();
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        // Migration logic for future version upgrades
+        // Explicit version migration handlers will be added per schema iteration
       },
       beforeOpen: (details) async {
         // Enforce SQLite Foreign Key constraints for relational integrity
