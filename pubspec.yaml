@@ -47,7 +47,8 @@ dependencies:
   flutter_secure_storage: ^9.2.2
 
   # Binary Wire Format (MQTT Telemetry & Contracts)
-  protobuf: ^3.1.0
+  protobuf: ^6.0.0
+  fixnum: ^1.1.0
 
   # Declarative Routing
   go_router: ^14.2.0
