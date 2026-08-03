@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../ui/screens/pairing_screen.dart';
 import '../ui/screens/placeholder_screen.dart';
 import '../ui/screens/splash_screen.dart';
+import '../ui/screens/ticketing_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/splash',
@@ -41,19 +42,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const EtmPlaceholderScreen(
-          title: 'Home Dashboard',
-          specReference: 'Spec 09 §8.4',
-        );
+        return const TicketingScreen();
       },
     ),
     GoRoute(
       path: '/dashboard',
       builder: (BuildContext context, GoRouterState state) {
-        return const EtmPlaceholderScreen(
-          title: 'Home Dashboard',
-          specReference: 'Spec 09 §8.4',
-        );
+        return const TicketingScreen();
       },
     ),
     GoRoute(
@@ -68,10 +63,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/ticketing/select-stops',
       builder: (BuildContext context, GoRouterState state) {
-        return const EtmPlaceholderScreen(
-          title: 'Boarding & Destination Selection',
-          specReference: 'Spec 09 §8.6',
-        );
+        return const TicketingScreen();
       },
     ),
     GoRoute(

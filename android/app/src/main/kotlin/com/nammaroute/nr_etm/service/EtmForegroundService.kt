@@ -7,11 +7,13 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.nammaroute.nr_etm.MainActivity
 
@@ -55,11 +57,23 @@ class EtmForegroundService : Service() {
 
     private fun startForegroundServiceInternal() {
         if (isRunning) return
-        isRunning = true
 
-        val notification = buildForegroundNotification("ETM Active — Duty & Location Engine Running")
-        startForeground(NOTIFICATION_ID, notification)
-        requestLocationUpdates()
+        val fineGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+        if (!fineGranted && !coarseGranted) {
+            return
+        }
+
+        try {
+            isRunning = true
+            val notification = buildForegroundNotification("ETM Active — Duty & Location Engine Running")
+            startForeground(NOTIFICATION_ID, notification)
+            requestLocationUpdates()
+        } catch (e: SecurityException) {
+            isRunning = false
+            stopSelf()
+        }
     }
 
     private fun stopForegroundServiceInternal() {

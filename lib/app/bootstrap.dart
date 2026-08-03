@@ -21,49 +21,50 @@ import 'app.dart';
 Future<void> bootstrap({required String environment}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Phase 1: Log environment config
-  final env = EnvConfig();
-  final flags = FeatureFlags();
+  unawaited(
+    runZonedGuarded(
+      () async {
+        // Phase 1: Log environment config
+        final env = EnvConfig();
+        final flags = FeatureFlags();
 
-  // Phase 5: Production logging
-  await AppLogger.init(environment: environment);
+        // Phase 5: Production logging
+        await AppLogger.init(environment: environment);
 
-  // Phase 6: Crash reporting
-  await CrashReporter.init();
+        // Phase 6: Crash reporting
+        await CrashReporter.init();
 
-  // Phase 3: Startup version telemetry
-  AppLogger.info(
-    '══════════════════════════════════════════════════════════',
-  );
-  AppLogger.info(
-    'NammaRoute ETM Starting | ${BuildInfo().displayVersion}',
-  );
-  AppLogger.info('Environment: ${env.envName}');
-  AppLogger.info('API: ${env.apiBaseUrl}');
-  AppLogger.info('MQTT: ${env.mqttBrokerUrl}:${env.mqttPort} (tls=${env.mqttUseTls})');
-  AppLogger.info('Log Level: ${env.logLevel}');
-  AppLogger.info('Crash Reporting: ${env.enableCrashReporting}');
-  AppLogger.info('Features: ${flags.toMap()}');
-  AppLogger.info(
-    '══════════════════════════════════════════════════════════',
-  );
+        // Phase 3: Startup version telemetry
+        AppLogger.info(
+          '══════════════════════════════════════════════════════════',
+        );
+        AppLogger.info(
+          'NammaRoute ETM Starting | ${BuildInfo().displayVersion}',
+        );
+        AppLogger.info('Environment: ${env.envName}');
+        AppLogger.info('API: ${env.apiBaseUrl}');
+        AppLogger.info('MQTT: ${env.mqttBrokerUrl}:${env.mqttPort} (tls=${env.mqttUseTls})');
+        AppLogger.info('Log Level: ${env.logLevel}');
+        AppLogger.info('Crash Reporting: ${env.enableCrashReporting}');
+        AppLogger.info('Features: ${flags.toMap()}');
+        AppLogger.info(
+          '══════════════════════════════════════════════════════════',
+        );
 
-  // Flutter framework error handler
-  FlutterError.onError = (FlutterErrorDetails details) {
-    AppLogger.error(
-      'Unhandled Flutter framework error',
-      details.exception,
-      details.stack,
-    );
-  };
+        // Flutter framework error handler
+        FlutterError.onError = (FlutterErrorDetails details) {
+          AppLogger.error(
+            'Unhandled Flutter framework error',
+            details.exception,
+            details.stack,
+          );
+        };
 
-  // Async error boundary
-  runZonedGuarded(
-    () {
-      runApp(const ProviderScope(child: EtmApp()));
-    },
-    (Object error, StackTrace stackTrace) {
-      AppLogger.error('Unhandled async error in zone', error, stackTrace);
-    },
+        runApp(const ProviderScope(child: EtmApp()));
+      },
+      (Object error, StackTrace stackTrace) {
+        AppLogger.error('Unhandled async error in zone', error, stackTrace);
+      },
+    ),
   );
 }
