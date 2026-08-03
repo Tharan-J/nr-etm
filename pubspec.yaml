@@ -55,12 +55,13 @@ dependencies:
 
   # Observability & Structured Diagnostics
   logger: ^2.3.0
-  sentry_flutter: ^8.0.0
+  sentry_flutter: ^9.26.0
 
   # Local Configuration & Session Cache
   shared_preferences: ^2.2.3
 
   cupertino_icons: ^1.0.8
+
 
 dev_dependencies:
   flutter_test:
@@ -117,3 +118,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+sqlite3:
+  source: process
+

@@ -43,3 +43,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Phase 4: Release signing secrets (NEVER commit)
+android/key.properties
+*.jks
+*.keystore
+
+# Phase 5: Local log files
+*.log
+
+# Kotlin build cache
+.kotlin/
+android/.kotlin/
+

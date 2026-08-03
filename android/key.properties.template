@@ -1,0 +1,13 @@
+# Release signing configuration.
+# This file MUST NOT be committed to version control.
+# Each developer / CI system must create their own copy.
+#
+# Copy this file to key.properties and fill in actual values:
+#   cp key.properties.template key.properties
+#
+# For CI, inject these values via environment variables.
+
+storeFile=path/to/release-keystore.jks
+storePassword=CHANGE_ME
+keyAlias=etm-release
+keyPassword=CHANGE_ME

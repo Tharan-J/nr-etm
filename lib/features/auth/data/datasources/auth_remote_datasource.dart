@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../../../../core/config/env_config.dart';
 import '../../domain/models/pairing_request.dart';
 
 abstract class AuthRemoteDataSource {
@@ -13,9 +14,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           dio ??
           Dio(
             BaseOptions(
-              baseUrl: 'https://api.nammaroute.com',
-              connectTimeout: const Duration(seconds: 10),
-              receiveTimeout: const Duration(seconds: 10),
+              baseUrl: EnvConfig().apiBaseUrl,
+              connectTimeout: EnvConfig().apiTimeout,
+              receiveTimeout: EnvConfig().apiTimeout,
               headers: {'Content-Type': 'application/json'},
             ),
           );

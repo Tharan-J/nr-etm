@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../../../core/config/env_config.dart';
 import '../../domain/models/bus_route.dart';
 import '../../domain/models/bus_stop.dart';
 import '../../domain/models/reference_catalog.dart';
@@ -17,9 +18,9 @@ class ReferenceRemoteDataSourceImpl implements ReferenceRemoteDataSource {
           dio ??
           Dio(
             BaseOptions(
-              baseUrl: 'https://api.nammaroute.com',
-              connectTimeout: const Duration(seconds: 10),
-              receiveTimeout: const Duration(seconds: 10),
+              baseUrl: EnvConfig().apiBaseUrl,
+              connectTimeout: EnvConfig().apiTimeout,
+              receiveTimeout: EnvConfig().apiTimeout,
             ),
           );
 

@@ -97,7 +97,7 @@ class EtmForegroundService : Service() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final val channel = NotificationChannel(
+            val channel = NotificationChannel(
                 CHANNEL_ID,
                 "NammaRoute ETM Foreground Service",
                 NotificationManager.IMPORTANCE_LOW

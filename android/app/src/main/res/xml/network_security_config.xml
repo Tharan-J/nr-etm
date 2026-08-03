@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phase 10: Network Security Configuration
+     Enforces HTTPS for all connections in release builds.
+     Debug builds allow cleartext for local development via the debug manifest. -->
+<network-security-config>
+    <!-- Production: HTTPS only, system trust store -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- Allow cleartext for local development servers (debug only) -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="user" />
+            <certificates src="system" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
